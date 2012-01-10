@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style></style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script type="text/javascript" src="images/jquery.ba-hashchange.js"></script>
+  <script type="text/javascript" src="images/jquery.history.js"></script>
+  <script type="text/javascript" src="images/Hash.js"></script>
+  
+  
+  <script>
+  $(document).ready(function () {
+	$("#start").click(function() {
+		})});
+  </script>
+  
+  
+  <script>
+  newstate="a";
+  $(document).ready(function () {
+	function loadContent() {
+		$("#content").text(window.location.hash+" loaded");
+	}
+	loadContent();
+	if (typeof(window.history.pushState) == 'function')
+	{
+		$("a").click(function(){
+			if (this.href!==window.location.pathname){
+				window.history.pushState("","",this.href);
+				loadContent();
+				$(this).attr("href",$(this).attr("href")+"a");
+			}
+			return false;
+		}); 
+		onpopstate = function(event) {
+			loadContent();
+		}
+	}
+	else
+	{
+		Hash.init(function(hash,initstate){
+			newstate=hash;
+			$("#content").text(hash+" loaded");
+		});
+		$("a").click(function(){
+				Hash.go(newstate);
+				newstate+="a";
+				return false;
+			});
+	}
+});
+  </script>
+
+</head>
+<body>
+  <p>Link: <a href="#a" name="start">start</a></p>
+<div id="content">
+
+<object width="420" height="315">
+<param name="movie" value="http://www.youtube.com/v/hqiNL4Hn04A?version=3&amp;hl=en_US"></param>
+<param name="allowFullScreen" value="true"></param>
+<param name="allowscriptaccess" value="always"></param>
+<embed src="http://www.youtube.com/v/hqiNL4Hn04A?version=3&amp;hl=en_US" type="application/x-shockwave-flash" width="420" height="315" allowscriptaccess="always" allowfullscreen="true"></embed>
+</object>
+
+</div>
+</body>
+</html>
